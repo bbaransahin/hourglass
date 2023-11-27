@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _hours = 0;
   int _minutes = 0;
+  int _seconds = 0;
   final minutesController = TextEditingController();
+  Timer? matimer;
+  bool isTicking = false;
 
   void dispose() {
     minutesController.dispose();
@@ -41,9 +45,41 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _startTimer() {
+    if (!isTicking) {
+        setState(() {
+            _hours = int.parse(minutesController.text)~/60;
+            _minutes = int.parse(minutesController.text)%60;
+            _seconds = 0;
+        });
+        matimer = Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+        isTicking = true;
+    }
+  }
+
+  void _stopTimer() {
+    if (isTicking) {
+        setState(() => matimer?.cancel());
+        isTicking = false;
+    }
+  }
+
+  void setCountDown() {
     setState(() {
-        _hours = int.parse(minutesController.text)~/60;
-        _minutes = int.parse(minutesController.text)%60;
+        if (_seconds == 0) {
+            if (_minutes == 0) {
+                if (_hours == 0) {
+                    _stopTimer();
+                }
+                _hours = _hours-1;
+                _minutes = 59;
+                _seconds = 59;
+            } else {
+                _minutes = _minutes-1;
+                _seconds = 59;
+            }
+        } else {
+            _seconds = _seconds-1;
+        }
     });
   }
 
@@ -65,12 +101,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Text(
-              '$_hours:$_minutes',
+              '$_hours:$_minutes:$_seconds',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(
                 onPressed: _startTimer,
                 child: Text('start'),
+            ),
+            ElevatedButton(
+                onPressed: _stopTimer,
+                child: Text('pause'),
             ),
           ],
         ),
