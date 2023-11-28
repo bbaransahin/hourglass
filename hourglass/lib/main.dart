@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Timer? matimer;
   bool isTicking = false;
   String status = "Be ready.";
-  Icon playButtonIcon = Icon(Icons.play_arrow);
+  Icon playButtonIcon = Icon(Icons.play_arrow, size: 48.0);
 
   void settingsButtonPressed() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()),);
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _seconds = 0;
             }
             status = "Stay focused!";
-            playButtonIcon = Icon(Icons.pause);
+            playButtonIcon = Icon(Icons.pause, size: 48.0);
         });
         matimer = Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
         isTicking = true;
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() => matimer?.cancel());
         isTicking = false;
         status = "Well done!";
-        playButtonIcon = Icon(Icons.play_arrow);
+        playButtonIcon = Icon(Icons.play_arrow, size: 48.0);
     }
   }
 
@@ -114,6 +114,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading:
+            IconButton(
+                icon: Icon(Icons.settings, size:48.0),
+                onPressed: settingsButtonPressed,
+            ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +130,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_hours:$_minutes:$_seconds',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: TextStyle(
+                fontSize: 60.0,
+              ),
             ),
             Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -134,13 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                     onPressed: _resetTimer,
-                    icon: Icon(Icons.stop),
+                    icon: Icon(Icons.stop, size: 48.0),
                 ),
                 ],
-            ),
-            ElevatedButton(
-                onPressed: settingsButtonPressed,
-                child: Text('settings'),
             ),
           ],
         ),
