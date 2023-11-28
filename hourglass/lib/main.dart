@@ -106,13 +106,18 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_hours:$_minutes:$_seconds',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            ElevatedButton(
-                onPressed: _startTimer,
-                child: Text('start'),
-            ),
-            ElevatedButton(
-                onPressed: _stopTimer,
-                child: Text('pause'),
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+                ElevatedButton(
+                    onPressed: _startTimer,
+                    child: Text('start'),
+                ),
+                ElevatedButton(
+                    onPressed: _stopTimer,
+                    child: Text('pause'),
+                ),
+                ],
             ),
           ],
         ),
