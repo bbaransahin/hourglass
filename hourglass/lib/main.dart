@@ -128,11 +128,21 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$status',
             ),
-            Text(
-              '$_hours:$_minutes:$_seconds',
-              style: TextStyle(
-                fontSize: 60.0,
-              ),
+            Container(
+                alignment: Alignment.center,
+                width: 300.0,
+                height: 150.0,
+                ///padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Text(
+                  '$_hours:$_minutes:$_seconds',
+                  style: TextStyle(
+                    fontSize: 60.0,
+                  ),
+                ),
             ),
             Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
