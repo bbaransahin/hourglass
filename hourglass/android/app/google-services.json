@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "191093454352",
+    "project_id": "hourglass-bcaba",
+    "storage_bucket": "hourglass-bcaba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191093454352:android:c9fcc1ab094a9139b4fc95",
+        "android_client_info": {
+          "package_name": "com.example.hourglass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPWcaduQDOT9rlL4glJnC29q1a_Pkog30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
