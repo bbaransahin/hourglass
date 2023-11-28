@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'settings_page.dart';
+import 'globals.dart';
 
 ///import 'package:firebase_core/firebase_core.dart';
 
@@ -16,12 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'hourglass',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Hourglass Home Page'),
     );
   }
 }
@@ -39,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
-  final minutesController = TextEditingController();
   Timer? matimer;
   bool isTicking = false;
   String status = "Be ready.";
@@ -47,11 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void settingsButtonPressed() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()),);
-  }
-
-  void dispose() {
-    minutesController.dispose();
-    super.dispose();
   }
 
   void _playButtonPressed() {
@@ -64,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _resetTimer() {
     setState(() {
-        _hours = int.parse(minutesController.text)~/60;
-        _minutes = int.parse(minutesController.text)%60;
+        _hours = int.parse(studyTimeController.text)~/60;
+        _minutes = int.parse(studyTimeController.text)%60;
         _seconds = 0;
     });
     _stopTimer();
@@ -75,8 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!isTicking) {
         setState(() {
             if (_hours == 0 && _minutes == 0 && _seconds == 0) {
-                _hours = int.parse(minutesController.text)~/60;
-                _minutes = int.parse(minutesController.text)%60;
+                _hours = int.parse(studyTimeController.text)~/60;
+                _minutes = int.parse(studyTimeController.text)%60;
                 _seconds = 0;
             }
             status = "Stay focused!";
@@ -125,13 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               '$status',
-            ),
-            TextField(
-              controller: minutesController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Minutes to study',
-              ),
             ),
             Text(
               '$_hours:$_minutes:$_seconds',
