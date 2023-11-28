@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'settings_page.dart';
+
 ///import 'package:firebase_core/firebase_core.dart';
 
 void main() {
@@ -42,6 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isTicking = false;
   String status = "Be ready.";
   Icon playButtonIcon = Icon(Icons.play_arrow);
+
+  void settingsButtonPressed() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()),);
+  }
 
   void dispose() {
     minutesController.dispose();
@@ -143,6 +149,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: Icon(Icons.stop),
                 ),
                 ],
+            ),
+            ElevatedButton(
+                onPressed: settingsButtonPressed,
+                child: Text('settings'),
             ),
           ],
         ),
