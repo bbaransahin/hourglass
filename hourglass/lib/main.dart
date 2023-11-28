@@ -40,18 +40,41 @@ class _MyHomePageState extends State<MyHomePage> {
   final minutesController = TextEditingController();
   Timer? matimer;
   bool isTicking = false;
+  String status = "Be ready.";
+  Icon playButtonIcon = Icon(Icons.play_arrow);
 
   void dispose() {
     minutesController.dispose();
     super.dispose();
   }
 
+  void _playButtonPressed() {
+    if (!isTicking) {
+        _startTimer();
+    } else {
+        _stopTimer();
+    }
+  }
+
+  void _resetTimer() {
+    setState(() {
+        _hours = int.parse(minutesController.text)~/60;
+        _minutes = int.parse(minutesController.text)%60;
+        _seconds = 0;
+    });
+    _stopTimer();
+  }
+
   void _startTimer() {
     if (!isTicking) {
         setState(() {
-            _hours = int.parse(minutesController.text)~/60;
-            _minutes = int.parse(minutesController.text)%60;
-            _seconds = 0;
+            if (_hours == 0 && _minutes == 0 && _seconds == 0) {
+                _hours = int.parse(minutesController.text)~/60;
+                _minutes = int.parse(minutesController.text)%60;
+                _seconds = 0;
+            }
+            status = "Stay focused!";
+            playButtonIcon = Icon(Icons.pause);
         });
         matimer = Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
         isTicking = true;
@@ -62,6 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (isTicking) {
         setState(() => matimer?.cancel());
         isTicking = false;
+        status = "Well done!";
+        playButtonIcon = Icon(Icons.play_arrow);
     }
   }
 
@@ -92,8 +117,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Remaining..',
+            Text(
+              '$status',
             ),
             TextField(
               controller: minutesController,
@@ -109,13 +134,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-                ElevatedButton(
-                    onPressed: _startTimer,
-                    child: Text('start'),
+                IconButton(
+                    onPressed: _playButtonPressed,
+                    icon: playButtonIcon,
                 ),
-                ElevatedButton(
-                    onPressed: _stopTimer,
-                    child: Text('pause'),
+                IconButton(
+                    onPressed: _resetTimer,
+                    icon: Icon(Icons.stop),
                 ),
                 ],
             ),
