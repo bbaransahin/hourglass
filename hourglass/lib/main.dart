@@ -4,7 +4,7 @@ import 'dart:async';
 import 'settings_page.dart';
 import 'globals.dart';
 
-///import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   runApp(const MyApp());
