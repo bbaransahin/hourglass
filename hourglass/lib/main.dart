@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'settings_page.dart';
-import 'globals.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+import 'firebase_options.dart';
+import 'settings_page.dart';
+import 'globals.dart';
+import 'database_api.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -156,6 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: Icon(Icons.stop, size: 48.0),
                 ),
                 ],
+            ),
+            IconButton(
+                onPressed: test_add,
+                icon: Icon(Icons.upload, size:48.0),
             ),
           ],
         ),
