@@ -43,6 +43,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int length_of_session = 0;
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
@@ -50,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isTicking = false;
   String status = "Be ready.";
   Icon playButtonIcon = Icon(Icons.play_arrow, size: 48.0);
+  final tagController = TextEditingController();
 
   void settingsButtonPressed() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()),);
@@ -64,6 +66,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _resetTimer() {
+    int losc = length_of_session-60*_hours-_minutes; /// length of session completed
+    if (_seconds > 0) {
+        losc = losc-1;
+    }
+    if (losc > 0) {
+        add_session(losc ,tagController.text);
+    }
     setState(() {
         _hours = int.parse(studyTimeController.text)~/60;
         _minutes = int.parse(studyTimeController.text)%60;
@@ -79,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _hours = int.parse(studyTimeController.text)~/60;
                 _minutes = int.parse(studyTimeController.text)%60;
                 _seconds = 0;
+                length_of_session = 60*_hours+_minutes;
             }
             status = "Stay focused!";
             playButtonIcon = Icon(Icons.pause, size: 48.0);
@@ -131,6 +141,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            TextField(
+                controller: tagController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'What do you study?',
+                ),
+            ),
             Text(
               '$status',
             ),
@@ -162,10 +179,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: Icon(Icons.stop, size: 48.0),
                 ),
                 ],
-            ),
-            IconButton(
-                onPressed: test_add,
-                icon: Icon(Icons.upload, size:48.0),
             ),
           ],
         ),
